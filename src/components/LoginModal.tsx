@@ -32,7 +32,7 @@ const LoginModal = ({
     console.log('Telegram login clicked');
   };
   return <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="login-modal-content max-w-xs p-4 rounded-3xl bg-transparent px-[16px] py-[16px] mx-0 my-0">
+      <DialogContent className="login-modal-content max-w-xs p-4 bg-transparent px-[16px] py-[16px] mx-0 my-0 rounded-3xl">
         <button onClick={onClose} className="login-close-button absolute right-4 top-4 z-10">
           <X className="h-5 w-5" />
         </button>
