@@ -1,8 +1,11 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Search, Lock, Shield, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const HowItWorksSection = () => {
+  const navigate = useNavigate();
+  
   const steps = [{
     icon: <Search className="w-12 h-12" />,
     title: "Browse Verified Assets",
@@ -91,8 +94,11 @@ const HowItWorksSection = () => {
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
               Join thousands of satisfied customers who trust Rise Blue Media for their social media asset needs.
             </p>
-            <Button className="cta-button text-lg px-8 py-4">
-              Browse Our Services
+            <Button 
+              className="cta-button text-lg px-8 py-4"
+              onClick={() => navigate('/products')}
+            >
+              Browse Our Products
             </Button>
           </div>
         </div>
