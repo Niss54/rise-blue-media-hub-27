@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -36,11 +37,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-white mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              <li><a href="#home" className="text-gray-400 hover:text-accent transition-colors duration-300">Home</a></li>
-              <li><a href="#products" className="text-gray-400 hover:text-accent transition-colors duration-300">Products</a></li>
-              <li><a href="#services" className="text-gray-400 hover:text-accent transition-colors duration-300">Services</a></li>
-              <li><a href="#how-it-works" className="text-gray-400 hover:text-accent transition-colors duration-300">How it Works</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-accent transition-colors duration-300">About</a></li>
+              <li><Link to="/" className="text-gray-400 hover:text-accent transition-colors duration-300">Home</Link></li>
+              <li><Link to="/products" className="text-gray-400 hover:text-accent transition-colors duration-300">Products</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-accent transition-colors duration-300">Services</Link></li>
+              <li><Link to="/how-it-works" className="text-gray-400 hover:text-accent transition-colors duration-300">How it Works</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-accent transition-colors duration-300">About</Link></li>
             </ul>
           </div>
 
@@ -48,11 +49,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-white mb-6">Services</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">Facebook Profiles</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">Business Manager</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">Facebook Pages</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">Instagram Assets</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">Custom Solutions</a></li>
+              <li><Link to="/services/facebook-profiles" className="text-gray-400 hover:text-accent transition-colors duration-300">Facebook Profiles</Link></li>
+              <li><Link to="/services/business-manager" className="text-gray-400 hover:text-accent transition-colors duration-300">Business Manager</Link></li>
+              <li><Link to="/services/facebook-pages" className="text-gray-400 hover:text-accent transition-colors duration-300">Facebook Pages</Link></li>
+              <li><Link to="/services/instagram-assets" className="text-gray-400 hover:text-accent transition-colors duration-300">Instagram Assets</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-accent transition-colors duration-300">Custom Solutions</Link></li>
             </ul>
           </div>
 
@@ -96,15 +97,15 @@ const Footer = () => {
             © 2024 Rise Blue Media. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
+            <Link to="/privacy-policy" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
               Privacy Policy
-            </a>
-            <a href="#" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
+            </Link>
+            <Link to="/terms-of-service" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
               Terms of Service
-            </a>
-            <a href="#" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
+            </Link>
+            <Link to="/cookie-policy" className="text-gray-400 hover:text-accent text-sm transition-colors duration-300">
               Cookie Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
