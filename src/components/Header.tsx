@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut, User } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import LoginModal from '@/components/LoginModal';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut, loading } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +25,22 @@ const Header = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error signing out",
+        description: "There was a problem signing out. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -73,12 +93,32 @@ const Header = () => {
               About
             </a>
             
-            <Button 
-              className="outline-button"
-              onClick={() => setIsLoginModalOpen(true)}
-            >
-              Sign In
-            </Button>
+            {!loading && (
+              user ? (
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2 text-white">
+                    <User size={16} />
+                    <span className="text-sm">{user.email}</span>
+                  </div>
+                  <Button 
+                    variant="outline"
+                    size="sm"
+                    onClick={handleSignOut}
+                    className="text-white border-white hover:bg-white hover:text-primary"
+                  >
+                    <LogOut size={16} className="mr-2" />
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <Button 
+                  className="outline-button"
+                  onClick={() => setIsLoginModalOpen(true)}
+                >
+                  Sign In
+                </Button>
+              )
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -131,15 +171,37 @@ const Header = () => {
               </a>
               
               <div className="flex flex-col space-y-2 pt-4">
-                <Button 
-                  className="outline-button w-full"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setIsLoginModalOpen(true);
-                  }}
-                >
-                  Sign In
-                </Button>
+                {!loading && (
+                  user ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2 text-white px-2">
+                        <User size={16} />
+                        <span className="text-sm">{user.email}</span>
+                      </div>
+                      <Button 
+                        variant="outline"
+                        className="w-full text-white border-white hover:bg-white hover:text-primary"
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          handleSignOut();
+                        }}
+                      >
+                        <LogOut size={16} className="mr-2" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button 
+                      className="outline-button w-full"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsLoginModalOpen(true);
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  )
+                )}
               </div>
             </div>
           </div>
