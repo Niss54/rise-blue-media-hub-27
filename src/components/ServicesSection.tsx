@@ -1,53 +1,78 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, Users, TrendingUp, Zap, Globe, CheckCircle } from 'lucide-react';
+import { Shield, Users, TrendingUp, Zap, Globe, CheckCircle, Target, Instagram, Facebook, PenTool, BarChart3, Lightbulb, LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
+
+type Service = {
+  id: string;
+  title: string;
+  description: string;
+  icon_name: string;
+  features: string[];
+};
+
+const iconMap: Record<string, LucideIcon> = {
+  Target,
+  Instagram,
+  Facebook,
+  Shield,
+  PenTool,
+  BarChart3,
+  Lightbulb,
+  Users,
+  TrendingUp,
+  Zap,
+  Globe,
+  CheckCircle
+};
 
 const ServicesSection = () => {
-  const services = [
-    {
-      id: 'bm-spy',
-      icon: <Shield className="w-6 h-6" />,
-      title: "BM SPY Service",
-      description: "Spy the whole ad accounts of your competitor with our professional service.",
-      features: ["Full competitor analysis", "Ad account insights", "Campaign strategies", "Professional reports"]
-    },
-    {
-      id: 'google-spy',
-      icon: <Globe className="w-6 h-6" />,
-      title: "Google Ads Account SPY",
-      description: "Professional Google Ads account spy service for competitive intelligence.",
-      features: ["Google Ads insights", "Keyword analysis", "Campaign tracking", "Performance metrics"]
-    },
-    {
-      id: 'shopify-spy',
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Shopify Spy Service",
-      description: "Complete Shopify store analysis and competitor intelligence service.",
-      features: ["Store analysis", "Product research", "Sales tracking", "Market insights"]
-    },
-    {
-      id: 'checkpoint-unlock',
-      icon: <CheckCircle className="w-6 h-6" />,
-      title: "Checkpoint Verification Unlock",
-      description: "Facebook checkpoint video verification unlock service for restricted accounts.",
-      features: ["Video verification", "Account recovery", "Checkpoint bypass", "Expert support"]
-    },
-    {
-      id: 'ad-account-unban',
-      icon: <Users className="w-6 h-6" />,
-      title: "Ad Account Unban Service",
-      description: "Professional Facebook ad account unban and restoration service.",
-      features: ["Account restoration", "Policy compliance", "Quick turnaround", "Success guarantee"]
-    },
-    {
-      id: 'custom-solutions',
-      icon: <Zap className="w-6 h-6" />,
-      title: "Custom Facebook Services",
-      description: "Tailored Facebook marketing and account management solutions.",
-      features: ["Custom solutions", "Bulk discounts", "Priority support", "Dedicated manager"]
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('services')
+        .select('*')
+        .order('updated_at', { ascending: false })
+        .limit(6);
+
+      if (error) {
+        console.error('Error fetching services:', error);
+        return;
+      }
+
+      setServices(data || []);
+    } catch (error) {
+      console.error('Error fetching services:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const getIcon = (iconName: string) => {
+    const IconComponent = iconMap[iconName] || Shield;
+    return <IconComponent className="w-6 h-6" />;
+  };
+
+  if (loading) {
+    return (
+      <section id="services" className="py-24 bg-gradient-to-b from-background to-secondary">
+        <div className="container mx-auto px-6">
+          <div className="text-center">
+            <div className="animate-pulse text-white">Loading services...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="services" className="py-24 bg-gradient-to-b from-background to-secondary">
@@ -66,7 +91,7 @@ const ServicesSection = () => {
             <Card key={index} className="bg-card/50 border-border/20 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 group h-full flex flex-col">
               <CardHeader className="pb-3">
                 <div className="text-accent mb-3 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
+                  {getIcon(service.icon_name)}
                 </div>
                 <CardTitle className="text-lg font-semibold text-white mb-2 leading-tight">
                   {service.title}
