@@ -14,36 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      products: {
-        Row: {
-          created_at: string
-          description: string
-          features: string[]
-          icon_name: string
-          id: string
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description: string
-          features?: string[]
-          icon_name: string
-          id?: string
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string
-          features?: string[]
-          icon_name?: string
-          id?: string
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       services: {
         Row: {
           created_at: string | null
