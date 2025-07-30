@@ -133,75 +133,82 @@ const Products = () => {
         <section className="py-16">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="bg-card/50 border-border/20 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 group relative">
-                  {product.popular && (
-                    <Badge className="absolute -top-2 -right-2 bg-accent text-white z-10">
-                      Popular
-                    </Badge>
-                  )}
-                  {product.premium && (
-                    <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black z-10">
-                      Premium
-                    </Badge>
-                  )}
-                  
-                  <CardHeader className="pb-3">
-                    <div className="relative h-32 mb-3 rounded-lg overflow-hidden">
-                      <img 
-                        src={product.image} 
-                        alt={product.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <Badge variant="outline" className="w-fit text-xs mb-2 border-accent/20 text-accent">
-                      {product.category}
-                    </Badge>
-                    <CardTitle className="text-lg font-semibold text-white mb-2 leading-tight truncate">
-                      {product.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-400 text-sm line-clamp-2">
-                      {product.description}
-                    </CardDescription>
-                  </CardHeader>
-                  
-                  <CardContent className="pt-0">
-                    <ul className="space-y-1.5 mb-4">
-                      {product.features.slice(0, 3).map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-300 text-sm">
-                          <CheckCircle className="w-3.5 h-3.5 text-accent mr-2 flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-accent font-semibold text-lg">
-                        {product.price}
-                      </span>
-                      <Badge 
-                        variant={product.status === "In Stock" ? "default" : "destructive"}
-                        className={product.status === "In Stock" ? "bg-green-600 hover:bg-green-700" : ""}
-                      >
-                        {product.status}
+              {filteredProducts.map((product) => {
+                const IconComponent = iconMap[product.icon_name as keyof typeof iconMap] || Package;
+                
+                return (
+                  <Card key={product.id} className="bg-card/50 border-border/20 backdrop-blur-sm hover:bg-card/70 transition-all duration-300 group relative">
+                    {product.popular && (
+                      <Badge className="absolute -top-2 -right-2 bg-accent text-white z-10">
+                        Popular
                       </Badge>
-                    </div>
+                    )}
+                    {product.premium && (
+                      <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black z-10">
+                        Premium
+                      </Badge>
+                    )}
                     
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-gray-400 text-sm">
-                        Stock: {product.stock} pcs
-                      </span>
-                    </div>
+                    <CardHeader className="pb-3">
+                      <div className="relative h-32 mb-3 rounded-lg overflow-hidden">
+                        <img 
+                          src={product.image} 
+                          alt={product.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <Badge variant="outline" className="w-fit text-xs mb-2 border-accent/20 text-accent">
+                        {product.category}
+                      </Badge>
+                      <CardTitle className="text-lg font-semibold text-white mb-2 leading-tight truncate">
+                        {product.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-400 text-sm line-clamp-2">
+                        {product.description}
+                      </CardDescription>
+                    </CardHeader>
                     
-                    <Button 
-                      className={product.status === "In Stock" ? "w-full cta-button text-sm py-2" : "w-full bg-gray-600 text-gray-300 cursor-not-allowed text-sm py-2"}
-                      disabled={product.status !== "In Stock"}
-                    >
-                      {product.status === "In Stock" ? "Buy Now" : "Out of Stock"}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+                    <CardContent className="pt-0">
+                      <ul className="space-y-1.5 mb-4">
+                        {product.features.slice(0, 3).map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-gray-300 text-sm">
+                            <CheckCircle className="w-3.5 h-3.5 text-accent mr-2 flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-accent font-semibold text-lg">
+                          {product.price}
+                        </span>
+                        <Badge 
+                          variant={product.status === "In Stock" ? "default" : "destructive"}
+                          className={product.status === "In Stock" ? "bg-green-600 hover:bg-green-700 text-white" : "bg-red-600 hover:bg-red-700 text-white"}
+                        >
+                          {product.status}
+                        </Badge>
+                      </div>
+                      
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-gray-400 text-sm">
+                          Stock: {product.stock} pcs
+                        </span>
+                        <div className="flex items-center gap-1 text-gray-400">
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+                      </div>
+                      
+                      <Button 
+                        className={product.status === "In Stock" ? "w-full cta-button text-sm py-2" : "w-full bg-gray-600 text-gray-300 cursor-not-allowed text-sm py-2"}
+                        disabled={product.status !== "In Stock"}
+                      >
+                        {product.status === "In Stock" ? "Buy Now" : "Out of Stock"}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
 
             {filteredProducts.length === 0 && (
