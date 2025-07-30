@@ -109,7 +109,7 @@ const Products = () => {
                 Our <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Products</span>
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                Premium Facebook assets and social media accounts ready for your marketing campaigns
+                Premium social media assets to help you scale your business and reach your marketing goals.
               </p>
               
               {/* Search Bar */}
@@ -124,7 +124,6 @@ const Products = () => {
                 />
               </div>
             </div>
-
           </div>
         </section>
 
@@ -187,7 +186,7 @@ const Products = () => {
               Need Custom Products?
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Contact our team for custom Facebook assets and bulk pricing options
+              Contact our team for custom social media assets and bulk pricing options
             </p>
             <Button className="cta-button text-lg px-8 py-4">
               Contact Support
